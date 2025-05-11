@@ -14,24 +14,13 @@ class Program {
         
         while (!done) {
             tic_tac.print_game_board();
-            tic_tac.get_player_response();
-            
+            tic_tac.get_player_response("Player 1");
+            tic_tac.print_game_board();
+            tic_tac.get_player_response("Player 2");
             tic_tac.print_game_board();
             break;
         }
     }
-
-    void get_player_response() {
-
-    }
-
-    void set_game_state(char[] game_state_in) {
-        game_state = game_state_in;
-    }
-
-    char[] game_state;
-    int num_cols = 3;
-    int num_rows = 3;
 }
 
 class Game {
@@ -53,17 +42,22 @@ class Game {
         game_state = game_state_in;
     }
 
-    public void get_player_response() {
-        Console.WriteLine("Player 1: Please enter the row and column you would like to mark [row column] or quit [q]");
+    public void get_player_response(string player) {
+        Console.WriteLine($"{player}: Please enter the row and column you would like to mark [row column] or quit [q]");
             string? response = Console.ReadLine();
 
             string[] subs = response.Split(' ');
             int selected_row = Int32.Parse(subs[0]);
             int selected_column = Int32.Parse(subs[1]);
             int game_state_index = selected_row * this.num_cols + selected_column;
-            this.game_state[game_state_index] = 'X';
+            if (player == "Player 1") {
+                this.game_state[game_state_index] = 'X';
+            }
+            else {
+                this.game_state[game_state_index] = 'O';
+            }
     }
-    
+
     public char[] game_state;
     public int num_cols = 3;
     public int num_rows = 3;
