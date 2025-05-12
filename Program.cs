@@ -16,17 +16,17 @@ class Program {
         
         bool done = false;
         
+        int round_num = 1;
         while (!done) {
             tic_tac.print_game_board();
-            tic_tac.get_player_response("Player 1");
-            tic_tac.check_cols();
-            tic_tac.check_rows();
-            tic_tac.check_diags();
-            tic_tac.print_game_board();
-            tic_tac.get_player_response("Player 2");
-            tic_tac.check_cols();
-            tic_tac.check_rows();
-            tic_tac.check_diags();
+            if (round_num % 2 == 1) {
+                tic_tac.get_player_response("Player 1");
+            }
+            else {
+                tic_tac.get_player_response("Player 2");
+            }
+            tic_tac.check_board();
+            round_num++;
         }
     }
 }
@@ -130,6 +130,12 @@ class Game {
                 return;
             }
         }
+    }
+
+    public void check_board() {
+        this.check_cols();
+        this.check_rows();
+        this.check_diags();
     }
 
     public char[,] game_state;
