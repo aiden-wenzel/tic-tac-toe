@@ -64,18 +64,39 @@ class Game {
     }
 
     public void get_player_response(string player) {
-        Console.WriteLine($"{player}: Please enter the row and column you would like to mark [row column] or quit [q]");
+        Console.WriteLine($"{player}: Please enter the row and column you would like to mark [row column]");
+        while (true) {
             string? response = Console.ReadLine();
 
             string[] subs = response.Split(' ');
             int selected_row = Int32.Parse(subs[0]);
             int selected_column = Int32.Parse(subs[1]);
-            if (player == "Player 1") {
+
+            if (selected_column < 0 || selected_column > this.num_cols-1) {
+                Console.WriteLine("Column was not inbounds. Try again.");
+                continue;
+            }
+            else if (selected_row < 0 || selected_row > this.num_rows-1) {
+                Console.WriteLine("Row was not inbounds. Try again.");
+                continue;
+            }
+
+            char selected_cell_val = this.game_state[selected_row, selected_column];
+            if (selected_cell_val != 'E') {
+                Console.WriteLine("That spot is already taken. Try again.");
+                continue;
+            }
+
+            else if (player == "Player 1") {
                 this.game_state[selected_row, selected_column] = 'X';
+                break;
             }
             else {
                 this.game_state[selected_row, selected_column] = 'O';
+                break;
             }
+
+        }
     }
 
     public bool check_cols() {
