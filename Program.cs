@@ -18,6 +18,7 @@ class Program {
         
         int round_num = 1;
         while (!done) {
+            Console.Clear();
             tic_tac.print_game_board();
             if (round_num % 2 == 1) {
                 tic_tac.get_player_response("Player 1");
@@ -32,7 +33,7 @@ class Program {
             }
             round_num++;
         }
-        
+        Console.Clear(); 
         if (round_num % 2 == 1) {
             Console.WriteLine("Player 1 Wins!");
         }
