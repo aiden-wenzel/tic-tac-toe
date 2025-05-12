@@ -4,7 +4,11 @@ class Program {
     static void Main() {
         // This line prints "Hello, World" 
         Game tic_tac = new Game();
-        char[] init_state = ['E', 'E', 'E', 'E', 'E', 'E', 'E', 'E', 'E'];
+        char[,] init_state = {
+            {'E', 'E', 'E'},
+            {'E', 'E', 'E'},
+            {'E', 'E', 'E'},
+        };
         
         
         Console.WriteLine("Welcome to Tick Tac Toe");
@@ -28,17 +32,17 @@ class Game {
         for (int i = 0; i < num_rows; i++) {
             string row_print = "|";
             for (int j = 0; j < num_cols; j++) {
-                if (game_state[i * num_cols + j] == 'E') {
+                if (game_state[i,j] == 'E') {
                     row_print += " |";
                 }
                 else {
-                    row_print += game_state[i * num_cols + j] + "|";
+                    row_print += game_state[i,j]  + "|";
                 }
             }
             Console.WriteLine(row_print);
         }
     }
-    public void set_game_state(char[] game_state_in) {
+    public void set_game_state(char[,] game_state_in) {
         game_state = game_state_in;
     }
 
@@ -49,16 +53,15 @@ class Game {
             string[] subs = response.Split(' ');
             int selected_row = Int32.Parse(subs[0]);
             int selected_column = Int32.Parse(subs[1]);
-            int game_state_index = selected_row * this.num_cols + selected_column;
             if (player == "Player 1") {
-                this.game_state[game_state_index] = 'X';
+                this.game_state[selected_row, selected_column] = 'X';
             }
             else {
-                this.game_state[game_state_index] = 'O';
+                this.game_state[selected_row, selected_column] = 'O';
             }
     }
 
-    public char[] game_state;
+    public char[,] game_state;
     public int num_cols = 3;
     public int num_rows = 3;
 }
