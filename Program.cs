@@ -25,9 +25,22 @@ class Program {
             else {
                 tic_tac.get_player_response("Player 2");
             }
-            tic_tac.check_board();
+            done = tic_tac.check_board();
+
+            if (done) {
+                break;
+            }
             round_num++;
         }
+        
+        if (round_num % 2 == 1) {
+            Console.WriteLine("Player 1 Wins!");
+        }
+        else {
+            Console.WriteLine("Player 2 Wins!");
+        }
+        tic_tac.print_game_board(); 
+        Console.WriteLine("Thanks for Playing!");
     }
 }
 
@@ -65,7 +78,7 @@ class Game {
             }
     }
 
-    public void check_cols() {
+    public bool check_cols() {
         for (int col = 0; col < num_cols; col++) {
             char curr_char = this.game_state[0, col];
             for (int row = 0; row < num_rows; row++) {
@@ -77,13 +90,14 @@ class Game {
                 }
                 if (num_rows-1 == row && this.game_state[row,col] == curr_char) {
                     Console.WriteLine($"Winner in column {col}");
-                    return;
+                    return true;
                 }
             }
         }
+        return false;
     }
 
-    public void check_rows() {
+    public bool check_rows() {
         for (int row = 0; row < num_rows; row++) {
             char curr_char = this.game_state[row, 0];
             for (int col = 0; col < num_cols; col++) {
@@ -95,12 +109,13 @@ class Game {
                 }
                 if (num_cols-1 == col && this.game_state[row,col] == curr_char) {
                     Console.WriteLine($"Winner in row {row}");
-                    return;
+                    return true;
                 }
             }
         }
+        return false;
     }
-    public void check_diags() {
+    public bool check_diags() {
         char init_char = this.game_state[0, 0];
         for (int row = 0; row < this.num_rows; row++) {
             int col = row;
@@ -111,8 +126,7 @@ class Game {
                 break;
             }
             if (row == num_rows-1 && this.game_state[row,col] == init_char) {
-                Console.WriteLine("Winner in Diagonal");
-                return;
+                return true;
             }
         }
 
@@ -127,14 +141,16 @@ class Game {
             }
             if (row == 0 && this.game_state[row,col] == init_char) {
                 Console.WriteLine("Winner in Diagonal");
-                return;
+                return true;
             }
         }
+
+        return false;
     }
 
-    public void check_board() {
-        this.check_cols();
-        this.check_rows();
+    public bool check_board() {
+        return this.check_cols() ||
+        this.check_rows() ||
         this.check_diags();
     }
 
