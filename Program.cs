@@ -70,8 +70,16 @@ class Game {
             string? response = Console.ReadLine();
 
             string[] subs = response.Split(' ');
-            int selected_row = Int32.Parse(subs[0]);
-            int selected_column = Int32.Parse(subs[1]);
+            int selected_row;
+            int selected_column;
+            try {
+                selected_row = Int32.Parse(subs[0]);
+                selected_column = Int32.Parse(subs[1]);
+            }
+            catch (Exception e) {
+                Console.WriteLine("Invalid Input. Try again.");
+                continue;
+            }
 
             if (selected_column < 0 || selected_column > this.num_cols-1) {
                 Console.WriteLine("Column was not inbounds. Try again.");
