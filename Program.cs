@@ -19,10 +19,14 @@ class Program {
         while (!done) {
             tic_tac.print_game_board();
             tic_tac.get_player_response("Player 1");
+            tic_tac.check_cols();
+            tic_tac.check_rows();
+            tic_tac.check_diags();
             tic_tac.print_game_board();
             tic_tac.get_player_response("Player 2");
-            tic_tac.print_game_board();
-            break;
+            tic_tac.check_cols();
+            tic_tac.check_rows();
+            tic_tac.check_diags();
         }
     }
 }
@@ -59,6 +63,73 @@ class Game {
             else {
                 this.game_state[selected_row, selected_column] = 'O';
             }
+    }
+
+    public void check_cols() {
+        for (int col = 0; col < num_cols; col++) {
+            char curr_char = this.game_state[0, col];
+            for (int row = 0; row < num_rows; row++) {
+                if (curr_char == 'E') {
+                    break;
+                }
+                if (this.game_state[row, col] != curr_char) {
+                    break;
+                }
+                if (num_rows-1 == row && this.game_state[row,col] == curr_char) {
+                    Console.WriteLine($"Winner in column {col}");
+                    return;
+                }
+            }
+        }
+    }
+
+    public void check_rows() {
+        for (int row = 0; row < num_rows; row++) {
+            char curr_char = this.game_state[row, 0];
+            for (int col = 0; col < num_cols; col++) {
+                if (curr_char == 'E') {
+                    break;
+                }
+                if (this.game_state[row, col] != curr_char) {
+                    break;
+                }
+                if (num_cols-1 == col && this.game_state[row,col] == curr_char) {
+                    Console.WriteLine($"Winner in row {row}");
+                    return;
+                }
+            }
+        }
+    }
+    public void check_diags() {
+        char init_char = this.game_state[0, 0];
+        for (int row = 0; row < this.num_rows; row++) {
+            int col = row;
+            if (init_char == 'E') {
+                break;
+            }
+            if (this.game_state[row, col] != init_char) {
+                break;
+            }
+            if (row == num_rows-1 && this.game_state[row,col] == init_char) {
+                Console.WriteLine("Winner in Diagonal");
+                return;
+            }
+        }
+
+        init_char = this.game_state[this.num_rows-1, 0];
+        for (int row = 2; row >= 0; row--) {
+            int col = num_rows - row - 1;
+            if (init_char == 'E') {
+                break;
+            }
+            if (this.game_state[row, col] != init_char) {
+                break;
+            }
+            if (row == 0 && this.game_state[row,col] == init_char) {
+                Console.WriteLine("Winner in Diagonal");
+                return;
+            }
+        }
     }
 
     public char[,] game_state;
